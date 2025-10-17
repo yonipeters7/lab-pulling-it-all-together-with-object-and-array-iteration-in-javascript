@@ -114,3 +114,100 @@ function gameObject() {
         },
     };
 }
+
+function numPointsScored(playerName) {
+  const game = gameObject();
+  for (const teamKey in game) {
+    const team = game[teamKey];
+    const players = team.players;
+    if (playerName in players) {
+      return players[playerName].points;
+    }
+  }
+}
+function shoeSize(playerName) {
+  const game = gameObject();
+  for (const teamKey in game) {
+    const team = game[teamKey];
+    const players = team.players;
+    if (playerName in players) {
+      return players[playerName].shoe;
+    }
+  }
+}
+function teamColors(teamName) {
+  const game = gameObject();
+  for (const teamKey in game) {
+    const team = game[teamKey];
+    if (team.teamName === teamName) {
+      return team.colors;
+    }
+  }
+}
+
+function teamNames() {
+  const game = gameObject();
+  return [game.home.teamName, game.away.teamName];
+}
+
+function playerStats(playerName) {
+  const game = gameObject();
+  for (const teamKey in game) {
+    const team = game[teamKey];
+    const players = team.players;
+    if (playerName in players) {
+      return players[playerName];
+    }
+  }
+}
+function homeTeam() {
+  return gameObject().home;
+}
+
+function awayTeam() {
+  return gameObject().away;
+}
+
+// Return player numbers for a given team name
+function playerNumbers(teamName) {
+  const game = gameObject();
+  for (const teamKey in game) {
+    const team = game[teamKey];
+    if (team.teamName === teamName) {
+      const numbers = [];
+      for (const player in team.players) {
+        numbers.push(team.players[player].number);
+      }
+      return numbers;
+    }
+  }
+  return [];
+}
+
+// Return number of rebounds for player with biggest shoe size
+function bigShoeRebounds() {
+  const game = gameObject();
+  let largestShoe = 0;
+  let rebounds = 0;
+
+  for (const teamKey in game) {
+    const team = game[teamKey];
+    for (const player in team.players) {
+      const stats = team.players[player];
+      if (stats.shoe > largestShoe) {
+        largestShoe = stats.shoe;
+        rebounds = stats.rebounds;
+      }
+    }
+  }
+  return rebounds;
+}
+
+// Export functions if needed
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    gameObject,
+    playerNumbers,
+    bigShoeRebounds,
+  };
+}
